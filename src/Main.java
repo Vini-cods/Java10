@@ -35,6 +35,7 @@ public class Main {
         // Variáveis para armazenar o estado
         final double[] numeros = {0};
         final String[] operador = {""};
+        final boolean[] resultadoExibido = {false};
 
         // Adicionando botões ao painel
         for (String texto : botoes) {
@@ -52,8 +53,12 @@ public class Main {
                             display.setText("");
                             numeros[0] = 0;
                             operador[0] = "";
+                            resultadoExibido[0] = false;
                             break;
                         case "=": // Calcular resultado
+                            if (operador[0].isEmpty()) {
+                                break;
+                            }
                             try {
                                 double numeroAtual = Double.parseDouble(display.getText());
                                 switch (operador[0]) {
@@ -77,6 +82,7 @@ public class Main {
                                 }
                                 display.setText(String.valueOf(numeros[0]));
                                 operador[0] = "";
+                                resultadoExibido[0] = true;
                             } catch (NumberFormatException ex) {
                                 display.setText("Entrada inválida");
                             }
@@ -91,6 +97,10 @@ public class Main {
                             }
                             break;
                         default: // Números
+                            if (resultadoExibido[0]) {
+                                display.setText("");
+                                resultadoExibido[0] = false;
+                            }
                             display.setText(display.getText() + comando);
                     }
                 }
